@@ -1,9 +1,5 @@
 pragma solidity ^0.4.0;
 
-
-import './CommentInterface.sol';
-
-
 contract CommentCraft {
     struct Post {
     byte32 id;
@@ -20,7 +16,7 @@ contract CommentCraft {
     mapping (byte32 => Post[]) pagesData;
 
 
-    // USERFUNCTIONS
+    // USER FUNCTIONS
     function setUsername(string username) {
         usernames[msg.sender] = username;
     }
