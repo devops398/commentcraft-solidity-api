@@ -4,7 +4,7 @@ pragma solidity ^0.4.0;
 import './CommentInterface.sol';
 
 
-contract Comment {
+contract CommentCraft {
     struct Post {
     byte32 id;
     uint rating;
