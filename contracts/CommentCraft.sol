@@ -1,5 +1,6 @@
 pragma solidity ^0.4.0;
 
+
 contract CommentCraft {
     struct Post {
     byte32 id;
@@ -26,10 +27,18 @@ contract CommentCraft {
     }
 
     // POSTS FUNCTIONS
-    function doPost(byte32 pageId, byte32 postId, string content) {
+    function createPost(byte32 pageId, byte32 postId, string content) returns (Post){
         Post post = Post(postId, 0, content, msg.sender, Post[]);
         posts[postId] = post;
         pagesData[pageId].push(post);
+        return post;
+    }
+
+    function replyToPost(byte32 pageId, byte32 postId, string content, byte32 replyTo) {
+        parentPost = posts[replyTo];
+        Post post = Post(postId, 0, content, msg.sender, Post[]);
+        posts[postId] = post;
+        parentPost.replies.push(post);
     }
 
     function getPagesPosts(byte32 pageId) constant returns (Post[]) {
