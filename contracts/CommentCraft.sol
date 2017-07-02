@@ -40,6 +40,9 @@ contract CommentCraft {
 
     // postsData FUNCTIONS
     function createPost(uint pageId, uint postId, string content) {
+        if (postsData[postId].id != 0) {
+            throw;
+        }
         postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
         pagesData[pageId].push(postId);
 
@@ -47,6 +50,9 @@ contract CommentCraft {
     }
 
     function replyToPost(uint postId, string content, uint replyTo) {
+        if (postsData[postId].id != 0) {
+            throw;
+        }
         postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
         postsData[replyTo].replies.push(postId);
 
@@ -61,7 +67,7 @@ contract CommentCraft {
         Post post = postsData[postId];
         return (post.rating, post.content, post.author, usernames[post.author], post.replies);
     }
-    // TODO: refactor likes to enum
+
     function like(uint postId) {
         if (postsData[postId].likes[msg.sender] == VoteStatus.Like) {
             throw;
