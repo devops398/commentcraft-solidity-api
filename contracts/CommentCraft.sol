@@ -18,6 +18,12 @@ contract CommentCraft {
     mapping (uint => uint[]) pagesData;
 
     uint[] emptypostsData;
+    // events
+    event Posted(address author, uint postId);
+
+    event Liked(address voter, uint postId);
+
+    event Disliked(address voter, uint postId);
     // USER FUNCTIONS
     function setUsername(string username) {
         usernames[msg.sender] = username;
@@ -31,11 +37,15 @@ contract CommentCraft {
     function createPost(uint pageId, uint postId, string content) {
         postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
         pagesData[pageId].push(postId);
+
+        Posted(msg.sender, postId);
     }
 
     function replyToPost(uint postId, string content, uint replyTo) {
         postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
         postsData[replyTo].replies.push(postId);
+
+        Posted(msg.sender, postId);
     }
 
     function getPagespostsData(uint pageId) constant returns (uint[]) {
@@ -58,6 +68,8 @@ contract CommentCraft {
             postsData[postId].rating += 1;
         }
         postsData[postId].likes[msg.sender] = 1;
+
+        Liked(msg.sender, postId);
     }
 
     function disLike(uint postId) {
@@ -71,5 +83,6 @@ contract CommentCraft {
             postsData[postId].rating -= 1;
         }
         postsData[postId].likes[msg.sender] = 2;
+        Disliked(msg.sender, postId);
     }
 }
