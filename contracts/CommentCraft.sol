@@ -2,13 +2,18 @@ pragma solidity ^0.4.0;
 
 
 contract CommentCraft {
+    enum VoteStatus {
+    NoVote,
+    Like,
+    Dislike
+    }
     struct Post {
     uint id;
     uint rating;
     string content;
     address author;
     uint[] replies;
-    mapping (address => uint8) likes; // 1 - like, 2 - dislike
+    mapping (address => VoteStatus) likes;
     }
 
     mapping (address => string) usernames;
@@ -58,31 +63,31 @@ contract CommentCraft {
     }
     // TODO: refactor likes to enum
     function like(uint postId) {
-        if (postsData[postId].likes[msg.sender] == 1) {
+        if (postsData[postId].likes[msg.sender] == VoteStatus.Like) {
             throw;
         }
-        if (postsData[postId].likes[msg.sender] == 2) {// if disliked before
+        if (postsData[postId].likes[msg.sender] == VoteStatus.Dislike) {// if disliked before
             postsData[postId].rating += 2;
         }
         else {
             postsData[postId].rating += 1;
         }
-        postsData[postId].likes[msg.sender] = 1;
+        postsData[postId].likes[msg.sender] = VoteStatus.Like;
 
         Liked(msg.sender, postId);
     }
 
     function disLike(uint postId) {
-        if (postsData[postId].likes[msg.sender] == 2) {
+        if (postsData[postId].likes[msg.sender] == VoteStatus.Dislike) {
             throw;
         }
-        if (postsData[postId].likes[msg.sender] == 1) {// if liked before
+        if (postsData[postId].likes[msg.sender] == VoteStatus.Like) {// if liked before
             postsData[postId].rating -= 2;
         }
         else {
             postsData[postId].rating -= 1;
         }
-        postsData[postId].likes[msg.sender] = 2;
+        postsData[postId].likes[msg.sender] = VoteStatus.Dislike;
         Disliked(msg.sender, postId);
     }
 }
