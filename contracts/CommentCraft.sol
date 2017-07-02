@@ -3,20 +3,20 @@ pragma solidity ^0.4.0;
 
 contract CommentCraft {
     struct Post {
-    byte32 id;
+    uint id;
     uint rating;
     string content;
     address author;
-    Post[] replies;
+    uint[] replies;
     }
 
     mapping (address => string) usernames;
 
-    mapping (byte32 => Post) posts;
+    mapping (uint => Post) posts;
 
-    mapping (byte32 => Post[]) pagesData;
+    mapping (uint => uint[]) pagesData;
 
-
+    uint[] emptyPosts;
     // USER FUNCTIONS
     function setUsername(string username) {
         usernames[msg.sender] = username;
@@ -27,21 +27,17 @@ contract CommentCraft {
     }
 
     // POSTS FUNCTIONS
-    function createPost(byte32 pageId, byte32 postId, string content) returns (Post){
-        Post post = Post(postId, 0, content, msg.sender, Post[]);
-        posts[postId] = post;
-        pagesData[pageId].push(post);
-        return post;
+    function createPost(uint pageId, uint postId, string content) {
+        posts[postId] = Post(postId, 0, content, msg.sender, emptyPosts);
+        pagesData[pageId].push(postId);
     }
 
-    function replyToPost(byte32 pageId, byte32 postId, string content, byte32 replyTo) {
-        parentPost = posts[replyTo];
-        Post post = Post(postId, 0, content, msg.sender, Post[]);
-        posts[postId] = post;
-        parentPost.replies.push(post);
+    function replyToPost(uint pageId, uint postId, string content, uint replyTo) {
+        posts[postId] = Post(postId, 0, content, msg.sender, emptyPosts);
+        posts[replyTo].replies.push(postId);
     }
 
-    function getPagesPosts(byte32 pageId) constant returns (Post[]) {
+    function getPagesPosts(uint pageId) constant returns (uint[]) {
         return pagesData[pageId];
     }
 }
