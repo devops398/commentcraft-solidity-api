@@ -7,7 +7,10 @@ const RPC_PORT = '8545';
 const provider = new Web3.providers.HttpProvider(`http://${RPC_HOST}:${RPC_PORT}`);
 const Commentcraft = contract(require('./build/contracts/CommentCraft.json'));
 Commentcraft.setProvider(provider);
-
+Commentcraft.deployed()
+  .then(instance => {
+    window.CCONTRACT = instance;
+  });
 export const getId = (data) => parseInt(XXH.h32(data, 0xABCD).toString(16), 16);
 
 export const getPosts = id => Commentcraft.deployed()
