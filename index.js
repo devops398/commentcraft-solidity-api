@@ -6,6 +6,7 @@ const RPC_HOST = 'localhost';
 const RPC_PORT = '8545';
 const provider = new Web3.providers.HttpProvider(`http://${RPC_HOST}:${RPC_PORT}`);
 window.web3e = new Web3(provider);
+const account = window.web3e.eth.defaultAccount;
 const Commentcraft = contract(require('./build/contracts/CommentCraft.json'));
 Commentcraft.setProvider(provider);
 Commentcraft.deployed()
@@ -23,6 +24,7 @@ export const getPost = id => Commentcraft.deployed()
 export const createPost = (pageId, content) => Commentcraft.deployed()
   .then(instance => {
     const postId = getId(`${pageId}${content}${Math.random()}`); // uniq post id
-    return instance.createPost(pageId, postId, content)
+
+    return instance.createPost(pageId, postId, content, { from: account })
       .then(() => postId);
   });
