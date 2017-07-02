@@ -32,12 +32,17 @@ contract CommentCraft {
         pagesData[pageId].push(postId);
     }
 
-    function replyToPost(uint pageId, uint postId, string content, uint replyTo) {
+    function replyToPost(uint postId, string content, uint replyTo) {
         posts[postId] = Post(postId, 0, content, msg.sender, emptyPosts);
         posts[replyTo].replies.push(postId);
     }
 
     function getPagesPosts(uint pageId) constant returns (uint[]) {
         return pagesData[pageId];
+    }
+
+    function getPost(uint postId) constant returns (uint, string, address, string, uint[]) {
+        Post post = posts[postId];
+        return (post.rating, post.content, post.author, usernames[post.author], post.replies);
     }
 }
