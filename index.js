@@ -16,10 +16,10 @@ Commentcraft.deployed()
 export const getId = (data) => parseInt(XXH.h32(data, 0xABCD).toString(16), 16);
 
 export const getPosts = id => Commentcraft.deployed()
-  .then(instance => Commentcraft.getPagespostsData.call(id));
+  .then(instance => instance.getPagespostsData.call(id));
 
 export const getPost = id => Commentcraft.deployed()
-  .then(instance => Commentcraft.getPost.call(id));
+  .then(instance => instance.getPost.call(id));
 
 export const createPost = (pageId, content) => Commentcraft.deployed()
   .then(instance => {
