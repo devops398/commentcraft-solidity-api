@@ -13,11 +13,11 @@ contract CommentCraft {
 
     mapping (address => string) usernames;
 
-    mapping (uint => Post) posts;
+    mapping (uint => Post) postsData;
 
     mapping (uint => uint[]) pagesData;
 
-    uint[] emptyPosts;
+    uint[] emptypostsData;
     // USER FUNCTIONS
     function setUsername(string username) {
         usernames[msg.sender] = username;
@@ -27,49 +27,49 @@ contract CommentCraft {
         return usernames[addr];
     }
 
-    // POSTS FUNCTIONS
+    // postsData FUNCTIONS
     function createPost(uint pageId, uint postId, string content) {
-        posts[postId] = Post(postId, 0, content, msg.sender, emptyPosts);
+        postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
         pagesData[pageId].push(postId);
     }
 
     function replyToPost(uint postId, string content, uint replyTo) {
-        posts[postId] = Post(postId, 0, content, msg.sender, emptyPosts);
-        posts[replyTo].replies.push(postId);
+        postsData[postId] = Post(postId, 0, content, msg.sender, emptypostsData);
+        postsData[replyTo].replies.push(postId);
     }
 
-    function getPagesPosts(uint pageId) constant returns (uint[]) {
+    function getPagespostsData(uint pageId) constant returns (uint[]) {
         return pagesData[pageId];
     }
 
     function getPost(uint postId) constant returns (uint, string, address, string, uint[]) {
-        Post post = posts[postId];
+        Post post = postsData[postId];
         return (post.rating, post.content, post.author, usernames[post.author], post.replies);
     }
     // TODO: refactor likes to enum
     function like(uint postId) {
-        if (posts[postId].likes[msg.sender] == 1) {
+        if (postsData[postId].likes[msg.sender] == 1) {
             throw;
         }
-        if (posts[postId].likes[msg.sender] == 2) {// if disliked before
-            posts[postId].rating += 2;
+        if (postsData[postId].likes[msg.sender] == 2) {// if disliked before
+            postsData[postId].rating += 2;
         }
         else {
-            posts[postId].rating += 1;
+            postsData[postId].rating += 1;
         }
-        posts[postId].likes[msg.sender] = 1;
+        postsData[postId].likes[msg.sender] = 1;
     }
 
     function disLike(uint postId) {
-        if (posts[postId].likes[msg.sender] == 2) {
+        if (postsData[postId].likes[msg.sender] == 2) {
             throw;
         }
-        if (posts[postId].likes[msg.sender] == 1) {// if liked before
-            posts[postId].rating -= 2;
+        if (postsData[postId].likes[msg.sender] == 1) {// if liked before
+            postsData[postId].rating -= 2;
         }
         else {
-            posts[postId].rating -= 1;
+            postsData[postId].rating -= 1;
         }
-        posts[postId].likes[msg.sender] = 2;
+        postsData[postId].likes[msg.sender] = 2;
     }
 }
