@@ -5,6 +5,7 @@ import contract from 'truffle-contract';
 const RPC_HOST = 'localhost';
 const RPC_PORT = '8545';
 const provider = new Web3.providers.HttpProvider(`http://${RPC_HOST}:${RPC_PORT}`);
+window.web3e = new Web3(provider);
 const Commentcraft = contract(require('./build/contracts/CommentCraft.json'));
 Commentcraft.setProvider(provider);
 Commentcraft.deployed()
