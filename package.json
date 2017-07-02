@@ -1,6 +1,6 @@
 {
   "name": "solidity-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -20,6 +20,7 @@
   },
   "homepage": "https://gitlab.com/commentcraft/solidity-api#README",
   "dependencies": {
+    "truffle-contract": "^2.0.1",
     "web3": "^0.19.1",
     "xxhashjs": "^0.2.1"
   }
