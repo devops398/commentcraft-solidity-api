@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://gitlab.com/commentcraft/solidity-api/issues"
   },
-  "homepage": "https://gitlab.com/commentcraft/solidity-api#README"
+  "homepage": "https://gitlab.com/commentcraft/solidity-api#README",
+  "dependencies": {
+    "web3": "^0.19.1",
+    "xxhashjs": "^0.2.1"
+  }
 }
