@@ -1,11 +1,13 @@
 import XXH from 'xxhashjs';
-import Web3 from 'web3';
+import Web4 from 'web4';
 import contract from 'truffle-contract';
 
 const RPC_HOST = 'localhost';
-const RPC_PORT = '8545';
+const RPC_PORT = '3889';
+const RPC_USER = 'test';
+const RPC_PASSWORD = 'test';
 const provider = new Web3.providers.HttpProvider(`http://${RPC_HOST}:${RPC_PORT}`);
-window.web3e = new Web3(provider);
+window.web4 = new Web4(provider);
 const account = window.web3e.eth.accounts[0];
 const Commentcraft = contract(require('./build/contracts/CommentCraft.json'));
 Commentcraft.setProvider(provider);

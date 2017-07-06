@@ -21,7 +21,7 @@
   "homepage": "https://gitlab.com/commentcraft/solidity-api#README",
   "dependencies": {
     "truffle-contract": "^2.0.1",
-    "web3": "^0.19.1",
+    "web4": "git@github.com:igorlimansky/web4.js.git#develop",
     "xxhashjs": "^0.2.1"
   }
 }
