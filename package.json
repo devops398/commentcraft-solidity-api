@@ -1,5 +1,5 @@
 {
-  "name": "solidity-api",
+  "name": "commentcraft-solidity-api",
   "version": "1.0.3",
   "description": "",
   "main": "index.js",
@@ -9,16 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@gitlab.com/commentcraft/solidity-api.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/commentcraft/solidity-api/issues"
-  },
-  "homepage": "https://gitlab.com/commentcraft/solidity-api#README",
   "dependencies": {
     "truffle-contract": "^2.0.1",
     "web4": "git@github.com:igorlimansky/web4.js.git#develop",
